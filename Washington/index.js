@@ -8,18 +8,29 @@ request(url, function(error, response, html) {
     let $ = cheerio.load(html);
 
     // Select all locations in html
-    // let locations = $( '.accordion_item-text' ).find( 'p' )
-    let elements = $( '.page_section_title').text();
+    let cities = $('.accordion_item');
 
-    console.log(elements);
-    
-    // // Loop through each location
-    // locations.each( function( index, element) {
-    //     element.children.forEach( function(child, index) {
-    //         if( child.name === 'strong' ) {
-    //             console.log("Location Name: ", child.children[0].data);
-    //         }
-    //     })
-    // })
+    cities.each(function() {
+        // Store city name
+        let cityName = $(this).find('.accordion_item-heading').text();
+
+        // Get multiple locations per city
+        let locations = $(this).find('p')
+
+        // Loop through each location
+        locations.each(function() {
+            if( $(this).find('strong').text() !== '' ) {
+                let locationName = $(this).find('strong')
+                if( locationName.length === 1) {
+                    locationName = locationName.text()
+                    console.log("###############");
+                    console.log(`${cityName}, ${locationName}`)
+                } else {
+                    console.log("###############");
+                    console.log("Multiple Locations")
+                }
+            }
+        })
+    })
     
 })
