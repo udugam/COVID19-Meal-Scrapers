@@ -10,5 +10,5 @@ module.exports = function(string) {
         for( let i = daysOfWeek.indexOf(startDay); i % daysOfWeek.length != daysOfWeek.indexOf(endDay); i++ ) days.push(daysOfWeek[i % daysOfWeek.length]);
         return days.toString();
     }
-    else return 'M,T,W,Th,F';
+    else return 'M,T,W,TH,F';
 }
