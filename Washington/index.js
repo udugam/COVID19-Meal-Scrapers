@@ -35,40 +35,11 @@ request(url, function(error, response, html) {
                     locationData.siteName = locationText[0];
                     locationData.siteStatus = 'Open';
                     locationData.siteState = 'WA';
-                    locationData.siteAddress = parseAddress(locationText[1])
+                    locationData.siteAddress = parseAddress(locationText[1], locationText)
                     // console.log("###########");
                     // console.log(locationData.siteAddress);
                 }
             }
-
-
-
-
-            // let locationData = {};
-            // if( $(this).text() !== '' ) { // This condition excludes locations that are listed 'TBD'
-            //     locationData.siteName = $(this).text();
-            //     locationData.siteStatus = 'Open'; // Assumed open since not listed as TBD
-            //     locationData.siteState = 'WA';
-                
-            //     let locationDetails = $(this).parent().text().split('\n')
-            //     for( let i = 0; i < locationDetails.length; i++) {
-            //         if( locationDetails[i] === locationData.siteName ) {
-            //             locationData.siteAddress = locationDetails[i+1];
-            //             locationData.daysofOperation = extractDays(locationDetails[i+2]);
-
-            //             if( locationData.daysofOperation === false) {
-            //                 console.log("###########");
-            //                 console.log(cityName);
-            //                 console.log($(this).parent().text());
-            //                 console.log(locationDetails[i+2]);
-            //             }
-
-            //             break;
-            //         }
-            //     }
-            //     results.push(locationData);
-                
-            // }
         })
     })
 })
