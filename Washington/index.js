@@ -35,7 +35,7 @@ request(url, function(error, response, html) {
                     locationData.siteName = locationText[0];
                     locationData.siteStatus = 'Open';
                     locationData.siteState = 'WA';
-                    locationData.siteAddress = parseAddress(locationText[1], locationText)
+                    locationData.siteAddress = parseAddress(locationText[1], cityName, locationText)
                     // console.log("###########");
                     // console.log(locationData.siteAddress);
                 }
