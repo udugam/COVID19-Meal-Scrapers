@@ -1,4 +1,17 @@
+const got = require('got');
+
 module.exports = async function(street, city) {
-    let zip = ''
+    let filteredStreet = street.replace(' ','%20');
+    let filteredCity = city.replace(' ', '%20');
+    let body = await got(`https://maps.googleapis.com/maps/api/geocode/json?address=${filteredStreet},${filteredCity},WA&key=${process.env.GOOGLE_API_KEY}`).json();
+    console.log(body.status);
+    let zip = '';
+ 
+    if( body.results.length === 1 ) {
+        let zipSearch = body.results[0].formatted_address.match(/WA [0-9][0-9][0-9][0-9][0-9]/gm);
+        if( zipSearch !== null) {
+            zip = zipSearch[0].match(/[0-9]/gm).join('');
+        }
+    } 
     return zip;
 }

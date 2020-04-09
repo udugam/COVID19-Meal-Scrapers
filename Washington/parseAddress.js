@@ -1,12 +1,12 @@
 const fetchZip = require('./fetchZip.js');
 const parser = require('parse-address'); // US Address parser
 
-module.exports = function(rawAddressString, cityName, originalLocationText) {
+module.exports = async function(rawAddressString, cityName, originalLocationText) {
     let parsedAddress = parser.parseLocation(rawAddressString)
     let finalAddressString;
     if( parsedAddress !== null ) {
         if( parsedAddress.zip === undefined && parsedAddress.street !== undefined && parsedAddress.number !== undefined) {
-            parsedAddress.zip = fetchZip(parsedAddress.street, parsedAddress.city)
+            parsedAddress.zip = await fetchZip( parsedAddress.street, parsedAddress.city || cityName )
         } 
         finalAddressString = `${parsedAddress.number} ${parsedAddress.street} ${parsedAddress.type}, ${parsedAddress.city || cityName}, WA ${parsedAddress.zip}`
         console.log(finalAddressString);

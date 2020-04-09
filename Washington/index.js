@@ -1,3 +1,4 @@
+require('dotenv').config();
 const cheerio = require('cheerio');
 const request = require('request');
 const moment = require('moment');
@@ -27,7 +28,7 @@ request(url, function(error, response, html) {
 
 
         // // Loop through each location
-        locations.each(function() {
+        locations.each(async function() {
             let locationData = {};
             let locationText = $(this).text().split('\n');
             if( locationText.includes('TBD') !== true ) {
@@ -35,7 +36,7 @@ request(url, function(error, response, html) {
                     locationData.siteName = locationText[0];
                     locationData.siteStatus = 'Open';
                     locationData.siteState = 'WA';
-                    locationData.siteAddress = parseAddress(locationText[1], cityName, locationText)
+                    locationData.siteAddress = await parseAddress(locationText[1], cityName, locationText)
                     // console.log("###########");
                     // console.log(locationData.siteAddress);
                 }
