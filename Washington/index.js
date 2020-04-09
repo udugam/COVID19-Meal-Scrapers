@@ -6,7 +6,7 @@ const url = 'https://www.uwkc.org/free-meals-during-school-closures/';
 //import custom functions
 const extractDays = require('./extractDays.js');
 const extractTime = require('./extractTime.js');
-const fetchZip = require('./fetchZip.js');
+const parseAddress = require('./parseAddress.js');
 
 // Scrape html from url
 request(url, function(error, response, html) {
@@ -17,7 +17,6 @@ request(url, function(error, response, html) {
 
     // Select all locations in html
     let cities = $('.accordion_item');
-    let count = 0;
 
     cities.each(function() {
         // Store city name
@@ -32,12 +31,13 @@ request(url, function(error, response, html) {
             let locationData = {};
             let locationText = $(this).text().split('\n');
             if( locationText.includes('TBD') !== true ) {
-                if( locationText.length === 3 ) { // 1008 Results
+                if( locationText.length === 3 ) { 
                     locationData.siteName = locationText[0];
                     locationData.siteStatus = 'Open';
                     locationData.siteState = 'WA';
-
-                    // Extract Street and City from location address;
+                    locationData.siteAddress = parseAddress(locationText[1])
+                    // console.log("###########");
+                    // console.log(locationData.siteAddress);
                 }
             }
 
@@ -71,5 +71,4 @@ request(url, function(error, response, html) {
             // }
         })
     })
-    console.log(count);
 })
