@@ -3,7 +3,8 @@ const got = require('got');
 module.exports = async function(street, city) {
     let filteredStreet = street.replace(' ','%20');
     let filteredCity = city.replace(' ', '%20');
-    let body = await got(`https://maps.googleapis.com/maps/api/geocode/json?address=${filteredStreet},${filteredCity},WA&key=${process.env.GOOGLE_API_KEY}`).json();
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${filteredStreet},${filteredCity},WA&key=${process.env.GOOGLE_API_KEY}`
+    let body = await got(url).json(); 
     console.log(body.status);
     let zip = '';
  
