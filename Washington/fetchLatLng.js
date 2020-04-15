@@ -11,9 +11,9 @@ module.exports = async function(rawAddressString, cityName) {
             await delay(20); // Delay needed to adhere to Google API Rate Limit of 50 RPS
             let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${filteredStreet},${filteredCity},WA&key=${process.env.GOOGLE_API_KEY}`
             let body = await got(url).json(); 
-            let LatLng = {};
-
+            
             if( body.results.length === 1 ) {
+                let LatLng = {};
                 LatLng.lat = body.results[0].geometry.location.lat;
                 LatLng.lng = body.results[0].geometry.location.lng;
                 return LatLng;

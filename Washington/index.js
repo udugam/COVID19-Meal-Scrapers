@@ -17,7 +17,8 @@ request(url, async function(error, response, html) {
     // Using cheerio to manipulate html using jquery like methods
     let $ = cheerio.load(html);
 
-    let validResults = [];
+    let structuredResults = [];
+    let unstructuredResults = [];
 
     // Select all locations in html
     let cities = $('.accordion_item');
@@ -36,23 +37,39 @@ request(url, async function(error, response, html) {
             let locationText = $(locations[i]).text().split('\n');
             if( locationText.includes('TBD') !== true ) {
                 if( locationText.length === 3 ) { 
-                    // locationData.siteName = locationText[0];
-                    // locationData.siteStatus = 'Open';
-                    // locationData.siteState = 'WA';
-                    // locationData.siteAddress = await parseAddress(locationText[1], cityName);
-                    // locationData.siteZip = extractZip(locationData.siteAddress);
-                    // locationData.daysofOperation = extractDays(locationText[2]);
-                    // locationData.lunchTime = extractTime(locationText[2]);
+                    locationData.siteName = locationText[0];
+                    locationData.siteStatus = 'Open';
+                    locationData.siteState = 'WA';
+                    locationData.siteAddress = await parseAddress(locationText[1], cityName);
+                    locationData.siteZip = extractZip(locationData.siteAddress);
+                    locationData.daysofOperation = extractDays(locationText[2]);
+                    locationData.lunchTime = extractTime(locationText[2]);
                     locationData._geoloc = await fetchLatLng(locationText[1], cityName);
-                    console.log(locationData._geoloc);
-                    validResults.push(locationData);
+
+                    // Print Result to show progress while running script
+                    console.log(locationData);
+
+                    // Push location data to results array
+                    structuredResults.push(locationData);
+                } else {
+
+                    // Print Result to show progress while running script
+                    console.log(locationText.toString());
+                    
+                    unstructuredResults.push(locationText.toString());
                 }
             }
         }
-
-        // Save results to file
     }
-    
-    
+    // Save structured Results to file
+    fs.writeFile('structuredResults.json', JSON.stringify(structuredResults), function(err) {
+        if(err) throw err;
+        console.log("Structured Results Saved")
+    })
 
+    // Save unstructured Results to file
+    fs.writeFile('unstructuredResults.json', JSON.stringify(unstructuredResults), function(err) {
+        if(err) throw err;
+        console.log("Unstructured Results Saved")
+    })
 })
