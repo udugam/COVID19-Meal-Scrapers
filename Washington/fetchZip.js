@@ -1,11 +1,12 @@
 const got = require('got');
+const delay = require('delay');
 
 module.exports = async function(street, city) {
     let filteredStreet = street.replace(' ','%20');
     let filteredCity = city.replace(' ', '%20');
+    await delay(20); // Delay needed to adhere to Google API Rate Limit of 50 RPS
     let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${filteredStreet},${filteredCity},WA&key=${process.env.GOOGLE_API_KEY}`
     let body = await got(url).json(); 
-    console.log(body.status);
     let zip = '';
  
     if( body.results.length === 1 ) {

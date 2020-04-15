@@ -21,28 +21,30 @@ request(url, async function(error, response, html) {
     // Select all locations in html
     let cities = $('.accordion_item');
 
-    cities.each(async function() {
+    // Loop through cities
+    for( let i = 0; i < cities.length; i++) {
         // Store city name
-        let cityName = $(this).find('.accordion_item-heading').text();
+        let cityName = $(cities[i]).find('.accordion_item-heading').text();
 
         // Get multiple locations per city
-        let locations = $(this).find('p')
-    
-        // // Loop through each location
-        locations.each(async function() {
-            await delay(1000);
+        let locations = $(cities[i]).find('p')
+        
+        // Loop through each location
+        for( let i = 0; i < locations.length; i++) {
             let locationData = {};
-            let locationText = $(this).text().split('\n');
+            let locationText = $(locations[i]).text().split('\n');
             if( locationText.includes('TBD') !== true ) {
                 if( locationText.length === 3 ) { 
                     locationData.siteName = locationText[0];
                     locationData.siteStatus = 'Open';
                     locationData.siteState = 'WA';
                     locationData.siteAddress = await parseAddress(locationText[1], cityName, locationText)
-                    // console.log("###########");
-                    // console.log(locationData.siteAddress);
+                    console.log(locationData.siteAddress);
                 }
             }
-        })
-    })
+        }
+    }
+    
+    
+
 })

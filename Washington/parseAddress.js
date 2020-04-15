@@ -9,7 +9,6 @@ module.exports = async function(rawAddressString, cityName, originalLocationText
             parsedAddress.zip = await fetchZip( parsedAddress.street, parsedAddress.city || cityName )
         } 
         finalAddressString = `${parsedAddress.number} ${parsedAddress.street} ${parsedAddress.type}, ${parsedAddress.city || cityName}, WA ${parsedAddress.zip}`
-        console.log(finalAddressString);
     } else {
         console.log("Raw String: ",rawAddressString)
     }
