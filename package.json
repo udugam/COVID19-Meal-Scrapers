@@ -1,0 +1,27 @@
+{
+  "name": "covid19-meal-scrapers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/udugam/COVID19-Meal-Scrapers.git"
+  },
+  "author": "Ryan Udugampola",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/udugam/COVID19-Meal-Scrapers/issues"
+  },
+  "homepage": "https://github.com/udugam/COVID19-Meal-Scrapers#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "delay": "^4.3.0",
+    "dotenv": "^8.2.0",
+    "got": "^10.7.0",
+    "parse-address": "^1.1.2",
+    "request": "^2.88.2"
+  }
+}
