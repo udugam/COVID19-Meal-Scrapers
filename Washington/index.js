@@ -1,15 +1,15 @@
 require('dotenv').config();
 const cheerio = require('cheerio');
 const request = require('request');
-const moment = require('moment');
 const url = 'https://www.uwkc.org/free-meals-during-school-closures/';
-const delay = require('delay');
+const fs = require('fs');
 
 //import custom functions
 const extractDays = require('./extractDays.js');
 const extractTime = require('./extractTime.js');
 const parseAddress = require('./parseAddress.js');
 const extractZip = require('./extractZip.js');
+const fetchLatLng = require('./fetchLatLng.js');
 
 
 // Scrape html from url
@@ -17,7 +17,7 @@ request(url, async function(error, response, html) {
     // Using cheerio to manipulate html using jquery like methods
     let $ = cheerio.load(html);
 
-    let results = [];
+    let validResults = [];
 
     // Select all locations in html
     let cities = $('.accordion_item');
@@ -39,14 +39,18 @@ request(url, async function(error, response, html) {
                     // locationData.siteName = locationText[0];
                     // locationData.siteStatus = 'Open';
                     // locationData.siteState = 'WA';
-                    // locationData.siteAddress = await parseAddress(locationText[1], cityName, locationText);
+                    // locationData.siteAddress = await parseAddress(locationText[1], cityName);
                     // locationData.siteZip = extractZip(locationData.siteAddress);
                     // locationData.daysofOperation = extractDays(locationText[2]);
                     // locationData.lunchTime = extractTime(locationText[2]);
-                    
+                    locationData._geoloc = await fetchLatLng(locationText[1], cityName);
+                    console.log(locationData._geoloc);
+                    validResults.push(locationData);
                 }
             }
         }
+
+        // Save results to file
     }
     
     
