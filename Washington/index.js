@@ -9,6 +9,7 @@ const delay = require('delay');
 const extractDays = require('./extractDays.js');
 const extractTime = require('./extractTime.js');
 const parseAddress = require('./parseAddress.js');
+const extractZip = require('./extractZip.js');
 
 
 // Scrape html from url
@@ -35,11 +36,14 @@ request(url, async function(error, response, html) {
             let locationText = $(locations[i]).text().split('\n');
             if( locationText.includes('TBD') !== true ) {
                 if( locationText.length === 3 ) { 
-                    locationData.siteName = locationText[0];
-                    locationData.siteStatus = 'Open';
-                    locationData.siteState = 'WA';
-                    locationData.siteAddress = await parseAddress(locationText[1], cityName, locationText)
-                    console.log(locationData.siteAddress);
+                    // locationData.siteName = locationText[0];
+                    // locationData.siteStatus = 'Open';
+                    // locationData.siteState = 'WA';
+                    // locationData.siteAddress = await parseAddress(locationText[1], cityName, locationText);
+                    // locationData.siteZip = extractZip(locationData.siteAddress);
+                    // locationData.daysofOperation = extractDays(locationText[2]);
+                    // locationData.lunchTime = extractTime(locationText[2]);
+                    
                 }
             }
         }

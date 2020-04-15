@@ -10,7 +10,7 @@ module.exports = async function(rawAddressString, cityName, originalLocationText
         } 
         finalAddressString = `${parsedAddress.number} ${parsedAddress.street} ${parsedAddress.type}, ${parsedAddress.city || cityName}, WA ${parsedAddress.zip}`
     } else {
-        console.log("Raw String: ",rawAddressString)
+        return rawAddressString;
     }
 
     return finalAddressString;
